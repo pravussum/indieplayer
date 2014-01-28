@@ -1,0 +1,143 @@
+body {
+	font-family: sans-serif;
+}
+
+h2 {
+	padding-bottom:0;
+	margin-bottom:0;
+    color: #A3A3A3;
+}
+
+a {
+	text-decoration: none;
+}
+
+.directory:hover {
+	background-color: lightblue;
+}
+
+.dirlink {
+	cursor: pointer;
+}
+
+.dirlink:hover {
+        color: white;
+}
+
+.headerPanel {
+	background-color: #3b5898;
+	position:fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 150px;
+	padding-left: 50px;
+	z-index: 100;
+	-webkit-box-shadow: 0px 5px 5px 2px rgba(100, 100, 100, 0.3);
+	box-shadow: 0px 5px 5px 2px rgba(100, 100, 100, 0.3); 
+}
+
+.lastfminfopanel {
+	position:fixed;
+	right: 0;
+	top: 0;
+	height: 150px;
+	width: 200px;
+	margin-right: 10px;
+	margin-top: 10px;
+	z-index: 200;
+	text-align: right;
+}
+
+.scrobbleInfo {
+	font-size: 80%;
+}
+
+.lastfmusername {
+        margin-bottom: 5px;
+}
+
+.contentPanel {
+	position: absolute;
+	top: 150px;
+}
+
+.playerPanel {
+	margin-top: 10px;
+}
+
+#playlist li {
+	cursor: pointer;
+	list-style: none;
+}
+
+#playlist li:hover {
+	background-color: gray;	
+}
+
+#playlist li.current {
+	background-color: #3b5898;
+    color:lightgray;
+}
+
+#playlist li.next {
+	background-color: gold;
+}
+
+
+.trackinfo {
+	margin-bottom: 5px;
+}
+
+.trackPanel {
+		
+}
+
+.trackImage {
+	float: left;
+    padding-right: 30px;
+    padding-top: 5px;
+}
+
+.artistImage {
+	height: 90px;
+}
+
+.stylishbutton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
+	background:-moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-o-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:-ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
+	background:linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7',GradientType=0);
+	background-color:#637aad;
+	border:1px solid #314179;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+}
+.stylishbutton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5972a7), color-stop(1, #637aad));
+	background:-moz-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-webkit-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-o-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-ms-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:linear-gradient(to bottom, #5972a7 5%, #637aad 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5972a7', endColorstr='#637aad',GradientType=0);
+	background-color:#5972a7;
+}
+.stylishbutton:active {
+	position:relative;
+	top:1px;
+}
+
+/* This button was generated using CSSButtonGenerator.com */
