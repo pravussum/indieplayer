@@ -14,17 +14,20 @@
 			var curStartTs;
 			var scrobbled = false;
 			$(function() {
-				console.log("loading");
+				console.debug("loading");
 				$("#audioplayer").on("ended", function() {
+					console.debug("audioplayer event: ended");
 					next();
 				});
 				$("#audioplayer").on("emptied", function() {
-						curArtist = undefined;
-						curTitle = undefined;
-						curStartTs = undefined;
-						scrobbled = false;
+					console.debug("audioplayer event: emptied");
+					curArtist = undefined;
+					curTitle = undefined;
+					curStartTs = undefined;
+					scrobbled = false;
 					var old = $("#playlist li.current");
 					if(old.length > 0) {
+						console.debug("emptied: removeClass current");
 						old.removeClass("current");
 					}
                     $(".trackinfo").empty();
@@ -80,11 +83,11 @@
 										auth_token = data.token;
 										var popup = window.open("http://www.last.fm/api/auth/?api_key=2984bad455d32a635e9729cd8f51ad87&token=" + auth_token);
 										$(".playerPanel").append($("<button class='lastfmbutton'>Continue Last.FM authorization...</button>").click(function(){
-											console.log("starting session auth");	
+											console.debug("starting session auth");	
 											
 											doNoAuthCall("auth.getSession", {token: auth_token}, 
 																	function(sessionData) {
-																			console.log(JSON.stringify(sessionData));
+																			console.debug(JSON.stringify(sessionData));
 																			if(sessionData.error) {
 																				alert("Error " + sessionData.error + ": " + sessionData.message);
 																				return;
@@ -95,8 +98,8 @@
 																			}
 																			lastfmname = sessionData.session.name;
 																			sessiontoken = sessionData.session.key;
-																			console.log(sessiontoken);
-																			console.log(lastfmname);
+																			console.debug(sessiontoken);
+																			console.debug(lastfmname);
 																			if(sessiontoken) {
 																				$.cookie("indieplayer_lastfm_session_token", sessiontoken);
 																				$.cookie("indieplayer_lastfm_name", lastfmname);
@@ -137,6 +140,7 @@
 			});
 			
 			function play(url, title, tagurl) {
+				console.debug("play");
 				curArtist = undefined;
 				curTitle = undefined;
 				curStartTs = undefined;
@@ -187,7 +191,8 @@
 				});
 								
 			}
-			function next() {
+			function next() {				
+				console.debug("next");
 				var old = $("#playlist li.current");
 				
 				var marked = $("#playlist li.next");
@@ -200,28 +205,39 @@
 				
 				if(next_.length > 0) {
 					play(next_.attr("audiourl"), next_.attr("audiotitle"), next_.attr("tagurl"));
-					next_.removeClass("next");
-					next_.addClass("current");
+					$("#audioplayer").on("loadstart", function() {
+						console.debug("next(): addclass current");
+						next_.removeClass("next");
+						next_.addClass("current");
+						$("#audioplayer").off("loadstart");
+					});
 				} else {
 					curArtist = undefined;
 					curTitle = undefined;
 					curStartTs = undefined;
+					console.debug("next(): removeClass current for previous track");
 					old.removeClass("current");
 					scrobbled = false;
 				}
 			}
 			
 			function prev() {
+				console.debug("prev");
 				var old = $("#playlist li.current");
 				if(old.length > 0) {
 					var current = old.prev("li");
 					if(current.length > 0) {
 						play(current.attr("audiourl"), current.attr("audiotitle"), current.attr("tagurl"));
-						current.addClass("current");
+						$("#audioplayer").on("loadstart", function() {
+							console.debug("prev(): addClass current");
+							current.addClass("current");
+							$("#audioplayer").off("loadstart");
+						});
 					} else {
 						curArtist = undefined;
 						curTitle = undefined;
 						curStartTs = undefined;
+						console.debug("prev(): removeClass current for previous track");
 						old.removeClass("current");
 						scrobbled = false;						
 					}
@@ -229,15 +245,21 @@
 			}			
 			
 			function startPlaylist() {
+				console.debug("startPlaylist");
 				var first = $("#playlist li").eq(0);
-				if(first.length > 0) {
+				if(first.length > 0) {					
 					play(first.attr("audiourl"), first.attr("audiotitle"), first.attr("tagurl"));
-					first.addClass("current");
+					$("#audioplayer").on("loadstart", function() {
+						console.debug("startPlaylist(): addclass current");
+						first.addClass("current");
+						$("#audioplayer").off("loadstart");
+					});					
 				}
 			}
 			
 			function changeDir(newDir) {
-				console.log("changedir " + newDir);
+				console.debug("changeDir");
+				console.debug("changedir " + newDir);
 				$.getJSON(	"getdirinfo.php?dir=" + encodeURIComponent(newDir),
 							function(data) {
 								curDir = newDir;
@@ -261,11 +283,17 @@
 								});
 								
 								$("#playlist li").on("click", function(e) {
+									var curItem = $(this);
 									if(e.ctrlKey) {
 										$(this).addClass("next");										
 									} else {										
 										play($(this).attr("audiourl"), $(this).attr("audiotitle"), $(this).attr("tagurl"));
-										$(this).addClass("current");
+										$("#audioplayer").on("loadstart", function() {
+											console.debug("li click(): addClass current");
+											curItem.addClass("current");
+											$("#audioplayer").off("loadstart");
+										});										
+
 									}
 								});
 																
